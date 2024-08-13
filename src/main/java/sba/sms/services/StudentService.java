@@ -44,6 +44,7 @@ public class StudentService implements StudentI {
         }
     }
 
+
     public Student getStudentByEmail(String email) {
         Student foundStudent = null;
         Transaction transaction = null;
@@ -74,7 +75,6 @@ public class StudentService implements StudentI {
             Student student = query.getSingleResult();
             transaction.commit();
             return student != null;
-
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -83,6 +83,16 @@ public class StudentService implements StudentI {
             System.out.println(e);
         }
         return false;
+    }
+
+    @Override
+    public void registerStudentToCourse(String email, int courseId) {
+
+    }
+
+    @Override
+    public List<Course> getStudentCourses(String email) {
+        return List.of();
     }
 
     public List<Student> getAllStudents() {
@@ -100,44 +110,7 @@ public class StudentService implements StudentI {
             return null;
         }
     }
-
-    public List<Course> getStudentCourses(String email) {
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            String hqlString = "SELECT course FROM Course course JOIN course.students student WHERE student.email = :email";
-            Query<Course> query = session.createQuery(hqlString, Course.class);
-            query.setParameter("email", email);
-            List<Course> StudentCourses = query.getResultList();
-            transaction.commit();
-            return StudentCourses;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                System.out.println(e);
-            }
-            System.out.println(e);
-            return null;
-        }
-    }
-
-    public void registerStudentToCourse(String email, int courseId) {
-        Transaction transaction = null;
-        session = factory.openSession();
-        try {
-            transaction = session.beginTransaction();
-            Student student = session.get(Student.class, email);
-            Course course = session.get(Course.class, courseId);
-            student.getCourses().add(course);
-            session.merge(student);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            System.out.println(e);
-        }
-    }
 }
+
 
 

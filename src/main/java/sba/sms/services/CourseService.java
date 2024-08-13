@@ -41,10 +41,8 @@ public class CourseService implements CourseI {
     }
 
     public Course getCourseById(int courseId) {
-
         Course course = null;
         Transaction transaction = null;
-
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
@@ -60,7 +58,6 @@ public class CourseService implements CourseI {
     }
 
     public List<Course> getAllCourses() {
-        // TODO: MIGHT NOT NEED THIS?
         Transaction transaction = null;
         try {
             session = factory.openSession();

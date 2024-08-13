@@ -18,7 +18,8 @@ import java.util.Set;
  * data. The Student class can be viewed as the owner of the bi-directional relationship.
  * Implement Lombok annotations to eliminate boilerplate code.
  */
-
+@Setter
+@Getter
 @Entity
 @Table(name = "Student")
 public class Student {
@@ -39,31 +40,6 @@ public class Student {
     @JoinTable(name = "students_courses", joinColumns = @JoinColumn(name = "student_email"), inverseJoinColumns = @JoinColumn(name = "courses_id"))
     private Set<Course> courses = new HashSet<>();
 
-    // no args constructor
-
-    Student() {
-
-    }
-
-    // all args constructor
-    // new Student("reema@gmail.com", "reema brown", "password")
-    // new Student("annette@gmail.com", "annette allen", PASSWORD)
-    Student(String email, String name, String password, Set<Course> Courses) {
-
-        this.email = email;
-        this.name = name;
-        this.password = password;
-        this.courses = courses;
-    }
-    // required args constructor
-
-    public Student(String email, String name, String password) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-    }
-
-    //     GETTERS AND SETTERS
     public String getEmail() {
         return this.email;
     }
@@ -117,9 +93,21 @@ public class Student {
         return super.toString();
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
+
+    Student() {
+    }
+
+    Student(String email, String name, String password, Set<Course> Courses) {
+
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+
+     public Student(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
     }
 }
 
